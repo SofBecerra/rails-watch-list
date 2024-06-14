@@ -1,17 +1,17 @@
 class BookmarksController < ApplicationController
+  before_action :set_list, only: [:new, :create]
 
   def new
-    @list = List.find(params[:list_id])
     @bookmark = Bookmark.new
   end
 
   def create
-    @list = List.find(params[:list_id])
-    @bookmark = @list.bookmarks.build(bookmark_params)
+    @bookmark = Bookmark.new(bookmark_params)
+    @bookmark.list = @list
     if @bookmark.save
       redirect_to list_path(@list), notice: 'Bookmark was successfully created.'
     else
-      render :new # Renderizar 'new' en caso de error
+      render :new, status: :unprocessable_entity # Renderizar 'new' en caso de error
     end
   end
 
@@ -22,8 +22,13 @@ class BookmarksController < ApplicationController
   end
 
   private
+
   def bookmark_params
     params.require(:bookmark).permit(:comment, :movie_id)
+  end
+
+  def set_list
+    @list = List.find(params[:list_id])
   end
 
 end
