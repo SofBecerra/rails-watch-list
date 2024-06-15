@@ -1,13 +1,21 @@
 
-<h2>Add a new bookmark</h2>
-<%= render 'bookmarks/form', list: @list, bookmark: @bookmark %>
-<h2>Bookmarks</h2>
-<ul>
-  <% @bookmarks.each do |bookmark| %>
-    <li>
-      <strong><%= bookmark.movie.title %></strong> - <%= bookmark.comment %>
-      <%= link_to 'Delete', bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-    </li>
-  <% end %>
-</ul>
-<%= link_to 'Back to lists', lists_path, class: "btn btn-secondary" %>
+<div class="container m-5">
+  <div class="row justify-content-center m-5">
+  <div class="col-12 col-lg-6">
+  <h2 class="mb-4">Add a New Bookmark</h2>
+    <%= render 'bookmarks/form', list: @list, bookmark: @bookmark %>
+    <h2 class="mb-4">Bookmarks</h2>
+    <ul>
+      <% @bookmarks.each do |bookmark| %>
+        <div class="d-flex justify-content-between mt-3">
+          <p>
+            <strong><%= bookmark.movie.title %></strong> - <%= bookmark.comment %>
+          </p>
+          <%= link_to ' ', bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-danger bi bi-trash3" %>
+        </div>
+      <% end %>
+    </ul>
+  <%= link_to 'Back to lists', lists_path, class: "btn btn-secondary" %>
+</div >
+</div>
+</div>
